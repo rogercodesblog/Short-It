@@ -1,0 +1,19 @@
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Short_It.Models
+{
+    [Table("Links")]
+    public class Link
+    {
+        [Key]
+        public int Id { get; set; }
+        [Required]
+        public string LinkTitle { get; set; }
+        [Required]
+        public string FullLink { get; set; }
+        [Required]
+        public string ShortLink { get; set; }
+        public DateTimeOffset DateCreated { get; set; }
+    }
+}
