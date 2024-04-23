@@ -1,7 +1,13 @@
+using Microsoft.EntityFrameworkCore;
+using Short_It.Data;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+//Add Database
+builder.Services.AddDbContext<ShortItAppContext>(options=>options.UseSqlite(builder.Configuration.GetConnectionString("ShortItAppConnection")));
 
 var app = builder.Build();
 
