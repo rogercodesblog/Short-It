@@ -44,7 +44,7 @@ namespace Short_It.Services.LinkService
 
                 _response.Success = true;
                 _response.Data = new LinkDTO() {  ShortLink = newLink.ShortLink };
-                _response.Message = "The Company was created successfully";
+                _response.Message = "The link was created successfully";
 
             }
             catch (Exception)
@@ -58,12 +58,38 @@ namespace Short_It.Services.LinkService
 
         }
 
-        public Task<ServiceResponse<LinkDTO>> DeleteLinkAsync(LinkDTO linkDTO)
+        public async Task<ServiceResponse<LinkDTO>> GetLinkByShortUrlAsync(string shortUrl)
         {
-            throw new NotImplementedException();
+            ServiceResponse<LinkDTO> _response = new ServiceResponse<LinkDTO>();
+
+            try
+            {
+                var linkToReturn = await _database.Links.FirstOrDefaultAsync(shortLink => shortLink.ShortLink == shortUrl);
+
+                if(linkToReturn == null)
+                {
+                    _response.Success = false;
+                    _response.Data = null;
+                    _response.Message = "The requested link does not exists";
+                    return _response;
+                }
+
+                _response.Success = true;
+                _response.Data = new LinkDTO() { ShortLink = linkToReturn.ShortLink, FullLink = linkToReturn.FullLink };
+                _response.Message = "The link was fetch successfully";
+
+            }
+            catch (Exception)
+            {
+                _response.Success = false;
+                _response.Data = null;
+                _response.Message = "There was an internal server error, try again, if the error persist please do comunicate with our it staff";
+            }
+
+            return _response;
         }
 
-        public Task<ServiceResponse<LinkDTO>> GetLinkByShortUrlAsync(string shortUrl)
+        public Task<ServiceResponse<LinkDTO>> DeleteLinkAsync(LinkDTO linkDTO)
         {
             throw new NotImplementedException();
         }
