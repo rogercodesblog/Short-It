@@ -1,7 +1,8 @@
-﻿using Short_It.Data;
+﻿using Short_It.Models;
+using Short_It.Data;
 using Short_It.DTOs.Link;
 
-namespace Short_It.Services.Link
+namespace Short_It.Services.LinkService
 {
     public class LinkService : ILinkService
     {
@@ -10,7 +11,7 @@ namespace Short_It.Services.Link
         {
             _database = database;
         }
-        public Task<ServiceResponse<LinkDTO>> AddLinkAsync(CreateLinkDTO createLinkDTO)
+        public async Task<ServiceResponse<LinkDTO>> AddLinkAsync(CreateLinkDTO createLinkDTO)
         {
             throw new NotImplementedException();
         }
@@ -24,5 +25,6 @@ namespace Short_It.Services.Link
         {
             throw new NotImplementedException();
         }
+
     }
 }

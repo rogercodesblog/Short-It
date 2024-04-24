@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.SignalR.Protocol;
 using Short_It.DTOs.Link;
 
-namespace Short_It.Services.Link
+namespace Short_It.Services.LinkService
 {
     public interface ILinkService
     {

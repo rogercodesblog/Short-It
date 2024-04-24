@@ -1,4 +1,4 @@
-﻿namespace Short_It.Services.Redirection
+﻿namespace Short_It.Services.RedirectionService
 {
     public interface IRedirectionService
     {
