@@ -15,9 +15,47 @@ namespace Short_It.Services.LinkService
         {
             _database = database;
         }
+
         public async Task<ServiceResponse<LinkDTO>> AddLinkAsync(CreateLinkDTO createLinkDTO)
         {
-            throw new NotImplementedException();
+
+            ServiceResponse<LinkDTO> _response = new ServiceResponse<LinkDTO>();
+
+            try
+            {
+
+                var linkTitle = await GetLinkTitle(createLinkDTO.FullLink);
+                var generatedShortLink = await GenerateShortLink(createLinkDTO.FullLink);
+
+                Link newLink = new Link()
+                {
+                    DateCreated = DateTime.Now,
+                    FullLink = createLinkDTO.FullLink,
+                    ShortLink =  generatedShortLink,
+                    LinkTitle = !string.IsNullOrWhiteSpace(linkTitle) ? linkTitle : $"Generated Link {generatedShortLink}"
+                };
+
+                await _database.Links.AddAsync(newLink);
+
+                if(!(await _database.SaveChangesAsync() >= 0 ))
+                {
+                    throw new ApplicationException("Nothing was added to the database");
+                }
+
+                _response.Success = true;
+                _response.Data = new LinkDTO() {  ShortLink = newLink.ShortLink };
+                _response.Message = "The Company was created successfully";
+
+            }
+            catch (Exception)
+            {
+                _response.Success = false;
+                _response.Data = null;
+                _response.Message = "There was an internal server error, try again, if the error persist please do comunicate with our it staff";
+            }
+
+            return _response;
+
         }
 
         public Task<ServiceResponse<LinkDTO>> DeleteLinkAsync(LinkDTO linkDTO)
@@ -30,11 +68,11 @@ namespace Short_It.Services.LinkService
             throw new NotImplementedException();
         }
 
-        private async Task<string> GenerateShortUrl(string Url)
+        private async Task<string> GenerateShortLink(string Url)
         {
             ShortGuid shortGuid = ShortGuid.NewGuid();
 
-            for (int i = 0; i == 100; i++) 
+            for (int i = 0; i == 100; i++)
             {
 
                 if (!await _database.Links.AnyAsync(shortlink => shortlink.ShortLink == shortGuid))
