@@ -24,15 +24,15 @@ namespace Short_It.Services.LinkService
             try
             {
 
-                var linkTitle = await GetLinkTitle(createLinkDTO.FullLink);
-                var generatedShortLink = await GenerateShortLink(createLinkDTO.FullLink);
+                var _linkTitle = await GetLinkTitle(createLinkDTO.FullLink);
+                var _generatedShortLink = await GenerateShortLink(createLinkDTO.FullLink);
 
                 Link newLink = new Link()
                 {
                     DateCreated = DateTime.Now,
                     FullLink = createLinkDTO.FullLink,
-                    ShortLink =  generatedShortLink,
-                    LinkTitle = !string.IsNullOrWhiteSpace(linkTitle) ? linkTitle : $"Generated Link {generatedShortLink}"
+                    ShortLink =  _generatedShortLink,
+                    LinkTitle = !string.IsNullOrWhiteSpace(_linkTitle) ? _linkTitle : $"Generated Link {_generatedShortLink}"
                 };
 
                 await _database.Links.AddAsync(newLink);
@@ -64,9 +64,9 @@ namespace Short_It.Services.LinkService
 
             try
             {
-                var linkToReturn = await _database.Links.FirstOrDefaultAsync(shortLink => shortLink.ShortLink == shortUrl);
+                var _linkToReturn = await _database.Links.FirstOrDefaultAsync(shortLink => shortLink.ShortLink == shortUrl);
 
-                if(linkToReturn == null)
+                if(_linkToReturn == null)
                 {
                     _response.Success = false;
                     _response.Data = null;
@@ -75,7 +75,7 @@ namespace Short_It.Services.LinkService
                 }
 
                 _response.Success = true;
-                _response.Data = new LinkDTO() { ShortLink = linkToReturn.ShortLink, FullLink = linkToReturn.FullLink };
+                _response.Data = new LinkDTO() { ShortLink = _linkToReturn.ShortLink, FullLink = _linkToReturn.FullLink };
                 _response.Message = "The link was fetch successfully";
 
             }
@@ -89,9 +89,40 @@ namespace Short_It.Services.LinkService
             return _response;
         }
 
-        public Task<ServiceResponse<LinkDTO>> DeleteLinkAsync(LinkDTO linkDTO)
+        public async Task<ServiceResponse<string>> DeleteLinkAsync(LinkDTO linkDTO)
         {
-            throw new NotImplementedException();
+            ServiceResponse<string> _response = new ServiceResponse<string>();
+
+            try
+            {
+                var _linkToDelete = await _database.Links.FirstOrDefaultAsync(link => link.ShortLink == linkDTO.ShortLink);
+
+                if (_linkToDelete == null)
+                {
+                    _response.Success = false;
+                    _response.Message = "The link was not found";
+                    return _response;
+                }
+
+                _database.Links.Remove(_linkToDelete);
+
+                if (!(await _database.SaveChangesAsync() >= 0))
+                {
+                    throw new ApplicationException("There was an error deleteing the link");
+                }
+
+                _response.Success = true;
+                _response.Message = "The link was deleted successfully";
+
+            }
+            catch (Exception ex)
+            {
+                _response.Success = false;
+                _response.Data = null;
+                _response.Message = "There was an error deleteing the link";
+            }
+
+            return _response;
         }
 
         private async Task<string> GenerateShortLink(string Url)

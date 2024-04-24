@@ -7,6 +7,6 @@ namespace Short_It.Services.LinkService
     {
         Task<ServiceResponse<LinkDTO>> AddLinkAsync(CreateLinkDTO createLinkDTO);
         Task<ServiceResponse<LinkDTO>> GetLinkByShortUrlAsync(string shortUrl);
-        Task<ServiceResponse<LinkDTO>> DeleteLinkAsync(LinkDTO linkDTO);
+        Task<ServiceResponse<string>> DeleteLinkAsync(LinkDTO linkDTO);
     }
 }
