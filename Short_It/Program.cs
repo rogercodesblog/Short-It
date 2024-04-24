@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Short_It.Data;
+using Short_It.Services.LinkService;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,6 +9,9 @@ builder.Services.AddControllersWithViews();
 
 //Add Database
 builder.Services.AddDbContext<ShortItAppContext>(options=>options.UseSqlite(builder.Configuration.GetConnectionString("ShortItAppConnection")));
+
+//Add Link Service Injection
+builder.Services.AddScoped<ILinkService, LinkService>();
 
 var app = builder.Build();
 
