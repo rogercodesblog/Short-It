@@ -9,6 +9,9 @@ builder.Services.AddControllersWithViews();
 //Add Database
 builder.Services.AddDbContext<ShortItAppContext>(options=>options.UseSqlite(builder.Configuration.GetConnectionString("ShortItAppConnection")));
 
+//Auto Mapper for DatabaseModels and DTOs
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
