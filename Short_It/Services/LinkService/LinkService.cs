@@ -3,6 +3,8 @@ using Short_It.Data;
 using Short_It.DTOs.Link;
 using CSharpVitamins;
 using Microsoft.EntityFrameworkCore;
+using System.Net;
+using System.Text.RegularExpressions;
 
 namespace Short_It.Services.LinkService
 {
@@ -39,6 +41,7 @@ namespace Short_It.Services.LinkService
                 {
                     break;
                 }
+
                 //GUID are usually unique identifiers, if we get to the point
                 //where we generate this many and we can't find
                 // one that is not repeated then there's something wrong.
@@ -50,6 +53,16 @@ namespace Short_It.Services.LinkService
             }
 
             return shortGuid;
+        }
+
+        private async Task<string> GetLinkTitle(string Url)
+        {
+            WebClient webClient = new WebClient();
+            string pageString = webClient.DownloadString(Url);
+
+            string Title = Regex.Match(pageString, @"\<title\b[^>]*\>\s*(?<Title>[\s\S]*?)\</title\>", RegexOptions.IgnoreCase).Groups["Title"].Value;
+
+            return String.IsNullOrWhiteSpace(Title) ? Title : "";
         }
 
     }
