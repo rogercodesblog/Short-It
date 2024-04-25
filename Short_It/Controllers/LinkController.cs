@@ -12,6 +12,31 @@ namespace Short_It.Controllers
             _linkService = linkService;
         }
 
+        [HttpGet("[action]")]
+        [ProducesResponseType(StatusCodes.Status200OK,Type = typeof(LinkDTO))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult<LinkDTO>> GetLinkByShortUrl(string shortUrl)
+        {
+
+            if (string.IsNullOrEmpty(shortUrl))
+            {
+                return BadRequest("The requested Url cannot be empty");
+            }
+
+            var _link = await _linkService.GetLinkByShortUrlAsync(shortUrl);
+
+            if (_link.Success == false)
+            {
+                ModelState.AddModelError("", _link.Message);
+                return StatusCode(500, ModelState);
+            }
+
+            return Ok(_link);
+
+        }
+
         [HttpPost("[action]")]
         [ProducesResponseType(StatusCodes.Status200OK,Type = typeof(LinkDTO))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -41,7 +66,35 @@ namespace Short_It.Controllers
 
         }
 
+        [HttpDelete("[action]")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult> DeleteLink(LinkDTO linkDTO)
+        {
 
+            if(linkDTO == null)
+            {
+                return BadRequest(ModelState);
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var _deletedLinkResult = await _linkService.DeleteLinkAsync(linkDTO);
+
+            if(_deletedLinkResult.Success == false)
+            {
+                ModelState.AddModelError("", _deletedLinkResult.Message);
+                return StatusCode(_deletedLinkResult.Message == "The link was not found" ? 404 : 500, ModelState);
+            }
+
+            return NoContent();
+
+        }
 
     }
 }
