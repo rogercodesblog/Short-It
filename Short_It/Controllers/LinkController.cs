@@ -14,6 +14,7 @@ namespace Short_It.Controllers
 
         [HttpPost("[action]")]
         [ProducesResponseType(StatusCodes.Status200OK,Type = typeof(LinkDTO))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<LinkDTO>> CreateShortLink([FromBody]CreateLinkDTO createLinkDTO)
         {
@@ -39,6 +40,8 @@ namespace Short_It.Controllers
             return Ok(_newLink);
 
         }
+
+
 
     }
 }
