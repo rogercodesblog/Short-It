@@ -1,12 +1,16 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Short_It.DTOs.Link;
+using Short_It.Services.LinkService;
 
 namespace Short_It.Controllers
 {
     public class LinkController : Controller
     {
-        public IActionResult Index()
+        private readonly ILinkService _linkService;
+        public LinkController(ILinkService linkService)
         {
-            return View();
+            _linkService = linkService;
         }
+
     }
 }
