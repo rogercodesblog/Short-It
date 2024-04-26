@@ -23,6 +23,10 @@ namespace Short_It.Services.LinkService
 
             try
             {
+                if (!IsValidUrl(createLinkDTO.FullLink))
+                {
+                    throw new ApplicationException("The provided link is not valid");
+                }
 
                 var _linkTitle = await GetLinkTitle(createLinkDTO.FullLink);
                 var _generatedShortLink = await GenerateShortLink(createLinkDTO.FullLink);
@@ -31,19 +35,19 @@ namespace Short_It.Services.LinkService
                 {
                     DateCreated = DateTime.Now,
                     FullLink = createLinkDTO.FullLink,
-                    ShortLink =  _generatedShortLink,
+                    ShortLink = _generatedShortLink,
                     LinkTitle = !string.IsNullOrWhiteSpace(_linkTitle) ? _linkTitle : $"Generated Link {_generatedShortLink}"
                 };
 
                 await _database.Links.AddAsync(newLink);
 
-                if(!(await _database.SaveChangesAsync() >= 0 ))
+                if (!(await _database.SaveChangesAsync() >= 0))
                 {
                     throw new ApplicationException("Nothing was added to the database");
                 }
 
                 _response.Success = true;
-                _response.Data = new LinkDTO() {  ShortLink = newLink.ShortLink };
+                _response.Data = new LinkDTO() { ShortLink = newLink.ShortLink };
                 _response.Message = "The link was created successfully";
 
             }
@@ -66,7 +70,7 @@ namespace Short_It.Services.LinkService
             {
                 var _linkToReturn = await _database.Links.FirstOrDefaultAsync(shortLink => shortLink.ShortLink == shortUrl);
 
-                if(_linkToReturn == null)
+                if (_linkToReturn == null)
                 {
                     _response.Success = false;
                     _response.Data = null;
@@ -127,6 +131,7 @@ namespace Short_It.Services.LinkService
 
         private async Task<string> GenerateShortLink(string Url)
         {
+
             ShortGuid shortGuid = ShortGuid.NewGuid();
 
             for (int i = 0; i == 100; i++)
@@ -158,6 +163,11 @@ namespace Short_It.Services.LinkService
             string Title = Regex.Match(pageString, @"\<title\b[^>]*\>\s*(?<Title>[\s\S]*?)\</title\>", RegexOptions.IgnoreCase).Groups["Title"].Value;
 
             return String.IsNullOrWhiteSpace(Title) ? Title : "";
+        }
+
+        private bool IsValidUrl(string Url)
+        {
+            return Regex.IsMatch(Url, @"((http|https)://)(www.)?" + "[a-zA-Z0-9@:%._\\+~#?&//=]" + "{2,256}\\.[a-z]" + "{2,6}\\b([-a-zA-Z0-9@:%" + "._\\+~#?&//=]*)");
         }
 
     }
