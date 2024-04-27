@@ -60,6 +60,12 @@ namespace Short_It.Controllers
             if (_newLink.Success == false)
             {
                 ModelState.AddModelError("", _newLink.Message);
+                return BadRequest(ModelState);
+            }
+
+            if (_newLink.Success == false && _newLink.IsInteralError == true)
+            {
+                ModelState.AddModelError("", _newLink.Message);
                 return StatusCode(500, ModelState);
             }
 

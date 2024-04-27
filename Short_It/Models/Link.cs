@@ -10,7 +10,7 @@ namespace Short_It.Models
         public int Id { get; set; }
         [Required]
         public string LinkTitle { get; set; }
-        [Required]
+        [Required(ErrorMessage = "The provided url can't be empty")]
         public string FullLink { get; set; }
         [Required]
         public string ShortLink { get; set; }

@@ -25,7 +25,10 @@ namespace Short_It.Services.LinkService
             {
                 if (!IsValidUrl(createLinkDTO.FullLink))
                 {
-                    throw new ApplicationException("The provided link is not valid");
+                    _response.Success = false;
+                    _response.Data = null;
+                    _response.Message = "The provided url is not valid, please provide a full url";
+                    return _response;
                 }
 
                 var _linkTitle = await GetLinkTitle(createLinkDTO.FullLink);
@@ -51,9 +54,17 @@ namespace Short_It.Services.LinkService
                 _response.Message = "The link was created successfully";
 
             }
+            catch (ApplicationException exception)
+            {
+                _response.Success = false;
+                _response.IsInteralError = true;
+                _response.Data = null;
+                _response.Message = exception.Message;
+            }
             catch (Exception)
             {
                 _response.Success = false;
+                _response.IsInteralError = true;
                 _response.Data = null;
                 _response.Message = "There was an internal server error, try again, if the error persist please do comunicate with our it staff";
             }
