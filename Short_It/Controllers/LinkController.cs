@@ -4,6 +4,7 @@ using Short_It.Services.LinkService;
 
 namespace Short_It.Controllers
 {
+    [Route("[controller]")]
     public class LinkController : Controller
     {
         private readonly ILinkService _linkService;
