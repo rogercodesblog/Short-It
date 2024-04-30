@@ -56,13 +56,14 @@ function GenerateShortLink() {
 }
 
 function ShowResult(Success, Message) {
+    labelResult.removeClass("d-none").addClass("d-block");
     if (Success) {
         labelResult.text(Message);
-        labelResult.removeClass("d-none").addClass("d-block").addClass("alert-success");
+        labelResult.removeClass("alert-danger").addClass("alert-success");
     }
     else {
         labelResult.text(Message);
-        labelResult.removeClass("d-none").addClass("d-block").addClass("alert-danger");
+        labelResult.removeClass("alert-success").addClass("alert-danger");
     }
     isButtonEnabled(true);
 }
@@ -72,6 +73,6 @@ function IsUrlEmpty(url) {
 }
 
 function isButtonEnabled(state) {
-    //Todo: Change text to loading... or put a spinner
+    btnGenerateShortLink.text(state ? "Short It!" : "Generating...");
     btnGenerateShortLink.prop('disabled', state ? false : true);
 }
