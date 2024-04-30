@@ -69,5 +69,6 @@ function IsUrlEmpty(url) {
 }
 
 function isButtonEnabled(state) {
+    //Todo: Change text to loading... or put a spinner
     btnGenerateShortLink.prop('disabled', state ? false : true);
 }
