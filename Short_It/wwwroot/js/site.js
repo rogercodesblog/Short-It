@@ -6,6 +6,7 @@ let linkFullUrl = $('#linkFullUrl');
 let linkShortUrl = $('#linkShortUrl');
 let inputUrl;
 let generatedShortUrl;
+let fullUrlWithGeneratedShortLink;
 let apiCallResponse;
 let apiCallResponseText;
 let apiCallErrorDefaultResponseText = 'There was an error while creating the short link, please try again.';
@@ -66,7 +67,11 @@ function showResult(Success, Message) {
         resultContainer.removeClass("alert-danger").addClass("alert-success");
         resultContainerText.text(Message);
         resultContainerNewLinkInfo.removeClass('d-none');
-        setLinkValues(inputUrl, `${$(location).attr('href')}${generatedShortUrl}`);
+
+        //TODO: change url to make use of "RedirectionController"
+        setFullUrlWithShortLink($(location).attr('href'), generatedShortUrl)
+
+        setLinkValues(inputUrl, fullUrlWithGeneratedShortLink);
     }
     else {
         resultContainer.removeClass("alert-success").addClass("alert-danger");
@@ -91,4 +96,20 @@ function setLinkValues(fullLink, shortLink) {
     linkFullUrl.text(fullLink);
     linkShortUrl.attr("href", shortLink);
     linkShortUrl.text(shortLink);
+}
+
+function copyUrl() {
+    copyShortUrlToClipboard(fullUrlWithGeneratedShortLink);
+}
+
+function copyShortUrlToClipboard(link) {
+    var $temp = $("<input>");
+    $("body").append($temp);
+    $temp.val(link).select();
+    document.execCommand("copy");
+    $temp.remove();
+}
+
+function setFullUrlWithShortLink(baseurl, shortlink) {
+    fullUrlWithGeneratedShortLink = baseurl + shortlink;
 }

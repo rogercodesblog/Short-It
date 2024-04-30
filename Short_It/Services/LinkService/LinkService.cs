@@ -16,7 +16,7 @@ namespace Short_It.Services.LinkService
             _database = database;
         }
 
-#warning TODO: Add validation for new links, if the full link exists, return it instead of generating a new entry
+#warning TODO: Add validation for new links, if the full link exists, return it instead of generating a new entry, maybe (?)
 
         public async Task<ServiceResponse<LinkDTO>> AddLinkAsync(CreateLinkDTO createLinkDTO)
         {
