@@ -1,8 +1,8 @@
 ﻿let labelResult = $('#labelResult');
 let btnGenerateShortLink = $('#btnGenerate');
 let inputUrl;
-let ApicallResponseErrors;
-let ApicallResponseErrorsText;
+let ApicallResponse;
+let ApicallResponseText;
 let ApiCallErrorDefaultResponseText = 'There was an error while creating the short link, please try again.';
 let txtInputEmptyErrorMessage = 'The provided url can\'t be empty';
 
@@ -24,22 +24,25 @@ function GenerateShortLink() {
             JSON.stringify({
                 'FullLink': inputUrl
             }),
-        success: function (textStatus) {
-            //Todo: Show correct message and new link
-            ShowResult(true, textStatus);
+        success: function (response) {
+
+            //TODO: Add a better way to see the "new short link"
+
+            ShowResult(true, `${response.message} \n Short Link: ${response.data.shortLink}` );
+
         },
         error: function (xhr) {
 
             if (xhr.status === 400) {
 
-                ApicallResponseErrors = JSON.parse(xhr.responseText);
+                ApicallResponse = JSON.parse(xhr.responseText);
 
-                for (var key in ApicallResponseErrors) {
-                    console.log(`Incorrect value for ${key}: ${ApicallResponseErrors[key]}`);
-                    ApicallResponseErrorsText = `${ApicallResponseErrors[key]}`;
+                for (var key in ApicallResponse) {
+                    console.log(`Incorrect value for ${key}: ${ApicallResponse[key]}`);
+                    ApicallResponseText = `${ApicallResponse[key]}`;
                 }
 
-                ShowResult(false, ApicallResponseErrorsText);
+                ShowResult(false, ApicallResponseText);
             }
             else if (xhr.status === 500) {
                 ShowResult(false, xhr.responseText);
