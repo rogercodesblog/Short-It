@@ -68,7 +68,6 @@ function showResult(Success, Message) {
         resultContainerText.text(Message);
         resultContainerNewLinkInfo.removeClass('d-none');
 
-        //TODO: change url to make use of "RedirectionController"
         setFullUrlWithShortLink($(location).attr('href'), generatedShortUrl)
 
         setLinkValues(inputUrl, fullUrlWithGeneratedShortLink);
@@ -111,5 +110,5 @@ function copyShortUrlToClipboard(link) {
 }
 
 function setFullUrlWithShortLink(baseurl, shortlink) {
-    fullUrlWithGeneratedShortLink = baseurl + shortlink;
+    fullUrlWithGeneratedShortLink = `${baseurl}\\To\\${shortlink}`;
 }
