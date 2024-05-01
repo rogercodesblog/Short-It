@@ -16,7 +16,6 @@ namespace Short_It.Controllers
         [HttpGet("to/{LinkProvided?}")]
         public async Task<ActionResult> RedirectShortUrl(string LinkProvided)
         {
-            //return Content("OK");
 
             if (string.IsNullOrEmpty(LinkProvided))
             {

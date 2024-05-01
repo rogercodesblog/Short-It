@@ -104,5 +104,10 @@ namespace Short_It.Controllers
 
         }
 
+        [HttpGet("/stats/{url?}")]
+        public async Task<IActionResult> Stats(string url)
+        {
+            return View();
+        }
     }
 }
