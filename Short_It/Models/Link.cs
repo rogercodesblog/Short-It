@@ -14,6 +14,7 @@ namespace Short_It.Models
         public string FullLink { get; set; }
         [Required]
         public string ShortLink { get; set; }
+        public int TimesVisited { get; set; }
         public DateTimeOffset DateCreated { get; set; }
     }
 }

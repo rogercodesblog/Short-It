@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Short_It.Data;
 
@@ -10,9 +11,11 @@ using Short_It.Data;
 namespace Short_It.Migrations
 {
     [DbContext(typeof(ShortItAppContext))]
-    partial class ShortItAppContextModelSnapshot : ModelSnapshot
+    [Migration("20240501160104_Added TimesVisited property to Link model")]
+    partial class AddedTimesVisitedpropertytoLinkmodel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.4");
