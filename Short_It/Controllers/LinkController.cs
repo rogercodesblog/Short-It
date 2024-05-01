@@ -42,6 +42,7 @@ namespace Short_It.Controllers
         [ProducesResponseType(StatusCodes.Status200OK,Type = typeof(LinkDTO))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        //[ValidateAntiForgeryToken]
         public async Task<ActionResult<LinkDTO>> CreateShortLink([FromBody]CreateLinkDTO createLinkDTO)
         {
 

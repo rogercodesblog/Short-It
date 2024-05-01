@@ -110,5 +110,5 @@ function copyShortUrlToClipboard(link) {
 }
 
 function setFullUrlWithShortLink(baseurl, shortlink) {
-    fullUrlWithGeneratedShortLink = `${baseurl}\\To\\${shortlink}`;
+    fullUrlWithGeneratedShortLink = `${baseurl}To/${shortlink}`;
 }
