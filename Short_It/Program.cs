@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Short_It.Data;
 using Short_It.Services.LinkService;
+using Short_It.Services.RedirectionService;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +13,9 @@ builder.Services.AddDbContext<ShortItAppContext>(options=>options.UseSqlite(buil
 
 //Add Link Service Injection
 builder.Services.AddScoped<ILinkService, LinkService>();
+
+//Add Redirection Service Injection
+builder.Services.AddScoped<IRedirectionService, RedirectionService>();
 
 var app = builder.Build();
 
