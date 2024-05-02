@@ -9,7 +9,7 @@
 <div class="row">
     <div class="col-10 offset-1 col-md-8 offset-md-2">
         <input id="txtUrl" type="text" class="form-control" placeholder="https://google.com/" />
-        <button id="btnGenerate" type="button" class="mx-auto d-block mt-3 btn btn-primary" onclick="generateShortLink()">Short It!</button>
+        <button id="btnGenerate" type="button" class="mx-auto d-block mt-3 btn btn-success" onclick="generateShortLink()">Short It!</button>
         <div id="resultContainer" class="alert d-none my-3" role="alert">
             <p class="my-2" id="resultContainerText"></p>
             <div id="newLink" class="row d-none">
@@ -22,8 +22,8 @@
                     <a class="my-2" id="linkShortUrl" href="" rel="noopener noreferrer" target="_blank">Short Url</a>
                 </div>
                 <div class="col-12 text-center my-3">
-                    <button type="button" class="btn btn-primary" onclick="copyUrl()">Copy Short Link</button>
-                    <button type="button" class="btn btn-primary">View Link Stats</button>
+                    <button type="button" class="btn btn-success" onclick="copyUrl()">Copy Short Link</button>
+                    <button type="button" class="btn btn-success">View Link Stats</button>
                 </div>
                 @* @Html.AntiForgeryToken() *@
             </div>

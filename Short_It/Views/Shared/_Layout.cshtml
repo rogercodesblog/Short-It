@@ -9,17 +9,17 @@
     <link rel="stylesheet" href="~/Short_It.styles.css" asp-append-version="true" />
 </head>
 <body>
-    <div class="container my-3 my-md-5">
-        <main role="main" class="pb-5 row">
-            <div class="col">
+    <div class="container my-3 my-md-5 rounded bg-white">
+        <main role="main" class="row">
+            <div class="col my-5">
                 @RenderBody()
             </div>
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container text-center">
-            Short It - <a asp-controller="Home" asp-action="Privacy">Privacy</a>
+    <footer class="footer">
+        <div class="container text-center text-white">
+            <a class="text-white text-decoration-underline" asp-controller="Home" asp-action="Privacy">Privacy</a> - Short It 2024 - @DateTimeOffset.Now.Year
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
