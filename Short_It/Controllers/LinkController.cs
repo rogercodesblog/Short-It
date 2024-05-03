@@ -104,11 +104,22 @@ namespace Short_It.Controllers
 
         }
 
-        [HttpGet("/stats/{url?}")]
-        public async Task<ActionResult<LinkStatsDTO>> Stats(string url)
+        [HttpGet("/stats/{shortUrl?}")]
+        public async Task<ActionResult<LinkStatsDTO>> GetLinkStats(string shortUrl)
         {
+            if (string.IsNullOrEmpty(shortUrl))
+            {
+                return View(null);
+            }
 
-            return View();
+            var _link = await _linkService.GetLinkStatsByShortUrlAsync(shortUrl);
+
+            if (_link.Success == false)
+            {
+                return View(null);
+            }
+
+            return View(_link.Data);
         }
     }
 }
