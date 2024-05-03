@@ -175,7 +175,7 @@ namespace Short_It.Services.LinkService
 
             string Title = Regex.Match(pageString, @"\<title\b[^>]*\>\s*(?<Title>[\s\S]*?)\</title\>", RegexOptions.IgnoreCase).Groups["Title"].Value;
 
-            return String.IsNullOrWhiteSpace(Title) ? Title : "";
+            return !String.IsNullOrWhiteSpace(Title) ? Title : "";
         }
 
         private bool IsValidUrl(string Url)
