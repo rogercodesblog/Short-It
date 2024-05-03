@@ -106,6 +106,37 @@ namespace Short_It.Services.LinkService
             return _response;
         }
 
+        public async Task<ServiceResponse<LinkStatsDTO>> GetLinkStatsByShortUrlAsync(string shortUrl)
+        {
+            ServiceResponse<LinkStatsDTO> _response = new ServiceResponse<LinkStatsDTO>();
+
+            try
+            {
+                var _linkToReturn = await _database.Links.FirstOrDefaultAsync(shortLink => shortLink.ShortLink == shortUrl);
+
+                if (_linkToReturn == null)
+                {
+                    _response.Success = false;
+                    _response.Data = null;
+                    _response.Message = "The requested link does not exists";
+                    return _response;
+                }
+
+                _response.Success = true;
+                _response.Data = new LinkStatsDTO() { ShortLink = _linkToReturn.ShortLink, FullLink = _linkToReturn.FullLink, DateCreated = _linkToReturn.DateCreated, LinkTitle = _linkToReturn.LinkTitle, TimesVisited = _linkToReturn.TimesVisited };
+                _response.Message = "The link was fetch successfully";
+
+            }
+            catch (Exception)
+            {
+                _response.Success = false;
+                _response.Data = null;
+                _response.Message = "There was an internal server error, try again, if the error persist please do comunicate with our it staff";
+            }
+
+            return _response;
+        }
+
         public async Task<ServiceResponse<string>> DeleteLinkAsync(LinkDTO linkDTO)
         {
             ServiceResponse<string> _response = new ServiceResponse<string>();
