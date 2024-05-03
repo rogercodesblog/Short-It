@@ -11,6 +11,7 @@ let apiCallResponse;
 let apiCallResponseText;
 let apiCallErrorDefaultResponseText = 'There was an error while creating the short link, please try again.';
 let txtInputEmptyErrorMessage = 'The provided url can\'t be empty';
+const toastNotification = $('#liveToast');
 
 function generateShortLink() {
     inputUrl = $("#txtUrl").val();
@@ -99,6 +100,9 @@ function setLinkValues(fullLink, shortLink) {
 
 function copyUrl() {
     copyShortUrlToClipboard(fullUrlWithGeneratedShortLink);
+
+    var toast = new bootstrap.Toast(toastNotification)
+    toast.show()
 }
 
 function copyShortUrlToClipboard(link) {
