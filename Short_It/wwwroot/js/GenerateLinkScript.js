@@ -116,3 +116,7 @@ function copyShortUrlToClipboard(link) {
 function setFullUrlWithShortLink(baseurl, shortlink) {
     fullUrlWithGeneratedShortLink = `${baseurl}To/${shortlink}`;
 }
+
+function viewStats() {
+    window.location.href = `/stats/${generatedShortUrl}`;
+}
