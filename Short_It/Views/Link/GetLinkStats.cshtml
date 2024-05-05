@@ -1,4 +1,28 @@
 ﻿@model LinkStatsDTO
 
-<p>Did we got a link? @(Model==null? "No, the model is null" : $"Yes, we got the model and the link title is: {Model.LinkTitle}")</p>
-<p>Stats View</p>
+@{
+    ViewData["Title"] = "Stats";
+}
+
+<div class="text-center my-md-5 my-3">
+    <h1 class="display-4">Link Stats</h1>
+    <p>Description to be written.</p>
+</div>
+<div class="row">
+    <div class="col-8 offset-2 col-md-3 offset-md-1 my-3">
+        <div class="card">
+            <div class="card-body text-center">
+                <h5 class="card-title">@Model.TimesVisited</h5>
+                <p class="card-text">Times Visited</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-12 col-md-7">
+        <p>Site Name: @Model.LinkTitle</p>
+        <p>Short Link:</p>
+        <a href="@Model.ShortLink" target="_blank" rel="noopener noreferrer">@Model.ShortLink</a>
+        <p>Full Link:</p>
+        <a href="@Model.FullLink" target="_blank" rel="noopener noreferrer">@Model.FullLink</a>
+        <p>Created: @Model.DateCreated.UtcDateTime</p>
+    </div>
+</div>

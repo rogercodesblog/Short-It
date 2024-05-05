@@ -119,6 +119,8 @@ namespace Short_It.Controllers
                 return View(null);
             }
 
+            _link.Data.ShortLink = $"{this.Request.Scheme}://{this.Request.Host}{this.Request.PathBase}/to/{_link.Data.ShortLink}";
+
             return View(_link.Data);
         }
     }
