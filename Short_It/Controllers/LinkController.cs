@@ -15,7 +15,7 @@ namespace Short_It.Controllers
         }
 
         [HttpGet("[action]")]
-        [ProducesResponseType(StatusCodes.Status200OK,Type = typeof(LinkDTO))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(LinkDTO))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -40,14 +40,14 @@ namespace Short_It.Controllers
         }
 
         [HttpPost("[action]")]
-        [ProducesResponseType(StatusCodes.Status200OK,Type = typeof(LinkDTO))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(LinkDTO))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         //[ValidateAntiForgeryToken]
-        public async Task<ActionResult<LinkDTO>> CreateShortLink([FromBody]CreateLinkDTO createLinkDTO)
+        public async Task<ActionResult<LinkDTO>> CreateShortLink([FromBody] CreateLinkDTO createLinkDTO)
         {
 
-            if(createLinkDTO == null)
+            if (createLinkDTO == null)
             {
                 return BadRequest(ModelState);
             }
@@ -83,7 +83,7 @@ namespace Short_It.Controllers
         public async Task<ActionResult> DeleteLink(LinkDTO linkDTO)
         {
 
-            if(linkDTO == null)
+            if (linkDTO == null)
             {
                 return BadRequest(ModelState);
             }
@@ -95,7 +95,7 @@ namespace Short_It.Controllers
 
             var _deletedLinkResult = await _linkService.DeleteLinkAsync(linkDTO);
 
-            if(_deletedLinkResult.Success == false)
+            if (_deletedLinkResult.Success == false)
             {
                 ModelState.AddModelError("", _deletedLinkResult.Message);
                 return StatusCode(_deletedLinkResult.Message == "The link was not found" ? 404 : 500, ModelState);
@@ -113,19 +113,31 @@ namespace Short_It.Controllers
             if (string.IsNullOrEmpty(shortUrl))
             {
                 getLinkStatsVM.IsLinkEmpty = true;
-                return View(null);
+                return View(getLinkStatsVM);
             }
 
             var _link = await _linkService.GetLinkStatsByShortUrlAsync(shortUrl);
 
             if (_link.Success == false)
             {
-                return View(null);
+                if (_link.IsInteralError)
+                {
+                    getLinkStatsVM.IsError = true;
+                    getLinkStatsVM.ErrorMessage = _link.Message;
+                    return View(getLinkStatsVM);
+                }
+
+                if (_link.IsInteralError == false)
+                {
+                    getLinkStatsVM.IsLinkNotFound= true;
+                    return View(getLinkStatsVM);
+                }
             }
+            getLinkStatsVM.IsSuccess = true;
+            getLinkStatsVM.LinkStats = _link.Data;
+            getLinkStatsVM.LinkStats.ShortLink = _link.Data.ShortLink = $"{this.Request.Scheme}://{this.Request.Host}{this.Request.PathBase}/to/{_link.Data.ShortLink}";
 
-            _link.Data.ShortLink = $"{this.Request.Scheme}://{this.Request.Host}{this.Request.PathBase}/to/{_link.Data.ShortLink}";
-
-            return View(_link.Data);
+            return View(getLinkStatsVM);
         }
     }
 }

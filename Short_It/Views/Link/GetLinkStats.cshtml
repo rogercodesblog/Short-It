@@ -9,11 +9,27 @@
     <p>Description to be written.</p>
 </div>
 <div class="row">
-    @if (Model == null)
+    @if (Model.IsSuccess == false)
     {
-
+        @if (Model.IsLinkEmpty)
+        {
+            <p>Please provide an url</p>
+            <p>input here something</p>
+        }
+        @if (Model.IsError)
+        {
+            <p>
+                Error: @Model.ErrorMessage
+            </p>
+        }
+        @if (Model.IsLinkNotFound)
+        {
+            <p>The provided link was not found in our DB</p>
+            <p>Is Link DTO Null??? = @(Model.LinkStats == null ? "Yes it is" : "no, it isn't")</p>
+        }
     }
-    else
+    
+    @if (Model.IsSuccess == true)
     {
         <div class="col-8 offset-2 col-md-3 offset-md-1 my-3">
             <div class="card">

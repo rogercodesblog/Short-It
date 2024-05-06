@@ -129,6 +129,7 @@ namespace Short_It.Services.LinkService
             }
             catch (Exception)
             {
+                _response.IsInteralError = true;
                 _response.Success = false;
                 _response.Data = null;
                 _response.Message = "There was an internal server error, try again, if the error persist please do comunicate with our it staff";
