@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Short_It.DTOs.Link;
+using Short_It.Models.ViewModels;
 using Short_It.Services.LinkService;
 
 namespace Short_It.Controllers
@@ -107,8 +108,11 @@ namespace Short_It.Controllers
         [HttpGet("/stats/{shortUrl?}")]
         public async Task<ActionResult<LinkStatsDTO>> GetLinkStats(string shortUrl)
         {
+            GetLinkStatsVM getLinkStatsVM = new GetLinkStatsVM();
+
             if (string.IsNullOrEmpty(shortUrl))
             {
+                getLinkStatsVM.IsLinkEmpty = true;
                 return View(null);
             }
 

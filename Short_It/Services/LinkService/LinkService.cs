@@ -123,7 +123,7 @@ namespace Short_It.Services.LinkService
                 }
 
                 _response.Success = true;
-                _response.Data = new LinkStatsDTO() { ShortLink = _linkToReturn.ShortLink, FullLink = _linkToReturn.FullLink, DateCreated = _linkToReturn.DateCreated, LinkTitle = _linkToReturn.LinkTitle, TimesVisited = _linkToReturn.TimesVisited };
+                _response.Data = new LinkStatsDTO() { ShortLink = _linkToReturn.ShortLink, FullLink = _linkToReturn.FullLink, DateCreated = _linkToReturn.DateCreated, LinkTitle = _linkToReturn.LinkTitle, TimesVisited = _linkToReturn.TimesVisited};
                 _response.Message = "The link was fetch successfully";
 
             }

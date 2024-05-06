@@ -1,4 +1,4 @@
-﻿@model LinkStatsDTO
+﻿@model GetLinkStatsVM
 
 @{
     ViewData["Title"] = "Short URL Stats";
@@ -9,20 +9,27 @@
     <p>Description to be written.</p>
 </div>
 <div class="row">
-    <div class="col-8 offset-2 col-md-3 offset-md-1 my-3">
-        <div class="card">
-            <div class="card-body text-center">
-                <h5 class="card-title">@Model.TimesVisited</h5>
-                <p class="card-text">Times Visited</p>
+    @if (Model == null)
+    {
+
+    }
+    else
+    {
+        <div class="col-8 offset-2 col-md-3 offset-md-1 my-3">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h5 class="card-title">@Model.LinkStats.TimesVisited</h5>
+                    <p class="card-text">Times Visited</p>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="col-12 col-md-7">
-        <p>Site Name: @Model.LinkTitle</p>
-        <p>Short Link:</p>
-        <a href="@Model.ShortLink" target="_blank" rel="noopener noreferrer">@Model.ShortLink</a>
-        <p>Full Link:</p>
-        <a href="@Model.FullLink" target="_blank" rel="noopener noreferrer">@Model.FullLink</a>
-        <p>Created: @Model.DateCreated.UtcDateTime</p>
-    </div>
+        <div class="col-12 col-md-7">
+            <p>Site Name: @Model.LinkStats.LinkTitle</p>
+            <p>Short Link:</p>
+            <a href="@Model.LinkStats.ShortLink" target="_blank" rel="noopener noreferrer">@Model.LinkStats.ShortLink</a>
+            <p>Full Link:</p>
+            <a href="@Model.LinkStats.FullLink" target="_blank" rel="noopener noreferrer">@Model.LinkStats.FullLink</a>
+            <p>Created: @Model.LinkStats.DateCreated.UtcDateTime</p>
+        </div>
+    }
 </div>
