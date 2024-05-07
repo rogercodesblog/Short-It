@@ -105,6 +105,8 @@ namespace Short_It.Controllers
 
         }
 
+
+
         [HttpGet("/stats/{shortUrl?}")]
         public async Task<ActionResult<LinkStatsDTO>> GetLinkStats(string shortUrl)
         {

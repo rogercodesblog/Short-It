@@ -6,29 +6,39 @@
 
 <div class="text-center my-md-5 my-3">
     <h1 class="display-4">Link Stats</h1>
-    <p>Description to be written.</p>
+    <p>Enter the your Link URL down below.</p>
 </div>
 <div class="row">
+
+    <div class="col-10 offset-1 col-md-10 offset-md-1 my-3">
+        <div>
+            <input class="form-control" type="text" id="txtShortUrl" />
+            <input class="mx-auto d-block btn btn-success my-3" type="button" value="View Stats" id="btnViewLinkStats" onclick="ViewStats()" />
+        </div>
+    </div>
+
     @if (Model.IsSuccess == false)
     {
         @if (Model.IsLinkEmpty)
         {
-            <p>Please provide an url</p>
-            <p>input here something</p>
+            <div id="resultContainer" class="alert alert-danger my-3" role="alert">
+                Please provide an url.
+            </div>
         }
         @if (Model.IsError)
         {
-            <p>
-                Error: @Model.ErrorMessage
-            </p>
+            <div id="resultContainer" class="alert alert-danger my-3" role="alert">
+                @Model.ErrorMessage
+            </div>
         }
         @if (Model.IsLinkNotFound)
         {
-            <p>The provided link was not found in our DB</p>
-            <p>Is Link DTO Null??? = @(Model.LinkStats == null ? "Yes it is" : "no, it isn't")</p>
+            <div id="resultContainer" class="alert alert-danger my-3" role="alert">
+                The provided link was not found.
+            </div>
         }
     }
-    
+
     @if (Model.IsSuccess == true)
     {
         <div class="col-8 offset-2 col-md-3 offset-md-1 my-3">
@@ -40,12 +50,17 @@
             </div>
         </div>
         <div class="col-12 col-md-7">
-            <p>Site Name: @Model.LinkStats.LinkTitle</p>
+            <p>Site Name:</p>
+            <p class="text-break">@Model.LinkStats.LinkTitle</p>
             <p>Short Link:</p>
-            <a href="@Model.LinkStats.ShortLink" target="_blank" rel="noopener noreferrer">@Model.LinkStats.ShortLink</a>
+            <a class="text-break" href="@Model.LinkStats.ShortLink" target="_blank" rel="noopener noreferrer">@Model.LinkStats.ShortLink</a>
             <p>Full Link:</p>
-            <a href="@Model.LinkStats.FullLink" target="_blank" rel="noopener noreferrer">@Model.LinkStats.FullLink</a>
+            <a class="text-break" href="@Model.LinkStats.FullLink" target="_blank" rel="noopener noreferrer">@Model.LinkStats.FullLink</a>
             <p>Created: @Model.LinkStats.DateCreated.UtcDateTime</p>
         </div>
     }
 </div>
+
+@section Scripts {
+    <script src="/js/GetLinkStatsScript.js" type="text/javascript"></script>
+}
