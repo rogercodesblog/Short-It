@@ -15,29 +15,28 @@
             <input class="form-control" type="text" id="txtShortUrl" />
             <input class="mx-auto d-block btn btn-success my-3" type="button" value="View Stats" id="btnViewLinkStats" onclick="ViewStats()" />
         </div>
+        @if (Model.IsSuccess == false)
+        {
+            @if (Model.IsLinkEmpty)
+            {
+                <div id="resultContainer" class="alert alert-danger my-3" role="alert">
+                    Please provide an url.
+                </div>
+            }
+            @if (Model.IsError)
+            {
+                <div id="resultContainer" class="alert alert-danger my-3" role="alert">
+                    @Model.ErrorMessage
+                </div>
+            }
+            @if (Model.IsLinkNotFound)
+            {
+                <div id="resultContainer" class="alert alert-danger my-3" role="alert">
+                    The provided link was not found.
+                </div>
+            }
+        }
     </div>
-
-    @if (Model.IsSuccess == false)
-    {
-        @if (Model.IsLinkEmpty)
-        {
-            <div id="resultContainer" class="alert alert-danger my-3" role="alert">
-                Please provide an url.
-            </div>
-        }
-        @if (Model.IsError)
-        {
-            <div id="resultContainer" class="alert alert-danger my-3" role="alert">
-                @Model.ErrorMessage
-            </div>
-        }
-        @if (Model.IsLinkNotFound)
-        {
-            <div id="resultContainer" class="alert alert-danger my-3" role="alert">
-                The provided link was not found.
-            </div>
-        }
-    }
 
     @if (Model.IsSuccess == true)
     {
