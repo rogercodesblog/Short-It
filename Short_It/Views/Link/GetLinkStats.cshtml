@@ -41,21 +41,29 @@
     @if (Model.IsSuccess == true)
     {
         <div class="col-8 offset-2 col-md-3 offset-md-1 my-3">
-            <div class="card">
+            <div class="card border-success rounded">
                 <div class="card-body text-center">
                     <h5 class="card-title">@Model.LinkStats.TimesVisited</h5>
                     <p class="card-text">Times Visited</p>
                 </div>
             </div>
         </div>
-        <div class="col-12 col-md-7">
-            <p>Site Name:</p>
-            <p class="text-break">@Model.LinkStats.LinkTitle</p>
-            <p>Short Link:</p>
-            <a class="text-break" href="@Model.LinkStats.ShortLink" target="_blank" rel="noopener noreferrer">@Model.LinkStats.ShortLink</a>
-            <p>Full Link:</p>
-            <a class="text-break" href="@Model.LinkStats.FullLink" target="_blank" rel="noopener noreferrer">@Model.LinkStats.FullLink</a>
-            <p>Created: @Model.LinkStats.DateCreated.UtcDateTime</p>
+        <div class="col-12 col-md-7 my-3">
+            <div class="mb-3 border border-success rounded p-2">
+                <p class="form-label">Site Name:</p>
+                <p class="form-label text-break">@Model.LinkStats.LinkTitle</p>
+            </div>
+            <div class="mb-3 border border-success rounded p-2">
+                <p class="form-label">Short Link:</p>
+                <a class="form-label text-break" href="@Model.LinkStats.ShortLink" target="_blank" rel="noopener noreferrer">@Model.LinkStats.ShortLink</a>
+            </div>
+            <div class="mb-3 border border-success rounded p-2">
+                <p class="form-label">Full Link:</p>
+                <a class="form-label text-break" href="@Model.LinkStats.FullLink" target="_blank" rel="noopener noreferrer">@Model.LinkStats.FullLink</a>
+            </div>
+            <div class="mb-3 p-2 border border-success rounded">
+                <p class="form-label">Created: @Model.LinkStats.DateCreated.UtcDateTime</p>
+            </div>
         </div>
     }
 </div>
