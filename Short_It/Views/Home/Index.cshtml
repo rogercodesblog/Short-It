@@ -10,6 +10,7 @@
     <div class="col-10 offset-1 col-md-8 offset-md-2">
         <input id="txtUrl" type="text" class="form-control" placeholder="https://google.com/" />
         <button id="btnGenerate" type="button" class="mx-auto d-block mt-3 btn btn-success" onclick="generateShortLink()">Short It!</button>
+        @Html.AntiForgeryToken()
         <div id="resultContainer" class="alert d-none my-3" role="alert">
             <p class="my-2" id="resultContainerText"></p>
             <div id="newLink" class="row d-none">
@@ -25,12 +26,13 @@
                     <button type="button" class="btn btn-success" onclick="copyUrl()">Copy Short Link</button>
                     <button type="button" class="btn btn-success" onclick="viewStats()">View Link Stats</button>
                 </div>
-                @* @Html.AntiForgeryToken() *@
+
             </div>
         </div>
 
     </div>
 </div>
+
 
 @section Toastr {
 
