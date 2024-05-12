@@ -3,13 +3,16 @@
 }
 
 <div class="text-center my-md-5 my-3">
-    <h1 class="display-1">Welcome to Short It!</h1>
+    <h1 class="display-1">Short It!</h1>
     <p class="my-3">Free URL Shortening tool.</p>
 </div>
 <div class="row">
     <div class="col-10 offset-1 col-md-8 offset-md-2">
         <input id="txtUrl" type="text" class="form-control" placeholder="https://google.com/" />
-        <button id="btnGenerate" type="button" class="mx-auto d-block mt-3 btn btn-success" onclick="generateShortLink()">Short It!</button>
+        <div class="text-center">
+        <button id="btnGenerate" type="button" class="mx-auto d-inline-block mt-3 btn btn-success" onclick="generateShortLink()">Short It!</button>
+            <button class="btn btn-success mx-auto d-inline-block mt-3" type="button" data-bs-toggle="collapse" data-bs-target="#collapseStadistics" aria-expanded="false" aria-controls="collapseStadistics">Already have a link?, View Stadistics</button>
+        </div>
         @Html.AntiForgeryToken()
         <div id="resultContainer" class="alert d-none my-3" role="alert">
             <p class="my-2" id="resultContainerText"></p>
@@ -26,17 +29,18 @@
                     <button type="button" class="btn btn-success" onclick="copyUrl()">Copy Short Link</button>
                     <button type="button" class="btn btn-success" onclick="viewStats()">View Link Stats</button>
                 </div>
-
             </div>
         </div>
-
     </div>
     <div class="col-10 offset-1 col-md-8 offset-md-2 mt-5">
-        <p>
-            Already have a link?, Check the stadistics by providing the short url down below
+        <div class="collapse" id="collapseStadistics">
+            <div class="card card-body">
+        <p>Check your link's stadistics by providing the short url down below
         </p>
         <input id="txtShortUrl" type="text" class="form-control" placeholder="your Url" />
         <button id="btnGenerate" type="button" class="mx-auto d-block mt-3 btn btn-success" onclick="ViewStatsFromHomePage()">View Stats</button>
+            </div>
+        </div>
     </div>
 </div>
 
