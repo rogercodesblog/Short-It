@@ -31,6 +31,13 @@
         </div>
 
     </div>
+    <div class="col-10 offset-1 col-md-8 offset-md-2 mt-5">
+        <p>
+            Already have a link?, Check the stadistics by providing the short url down below
+        </p>
+        <input id="txtShortUrl" type="text" class="form-control" placeholder="your Url" />
+        <button id="btnGenerate" type="button" class="mx-auto d-block mt-3 btn btn-success" onclick="ViewStatsFromHomePage()">View Stats</button>
+    </div>
 </div>
 
 <div class="row text-center my-5">
@@ -69,4 +76,5 @@
 
 @section Scripts {
     <script type="text/javascript" src="/js/GenerateLinkScript.js"></script>
+    <script type="text/javascript" src="/js/GetLinkStatsScript.js"></script>
 }
