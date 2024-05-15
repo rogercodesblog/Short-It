@@ -19,6 +19,23 @@ namespace Short_It.Controllers
         //To be Implemented:
 
         //Get Link by Short Url (LinkDTO)
+        public async Task<ActionResult<LinkDTO>> GetShortLink(string url)
+        {
+            if (string.IsNullOrEmpty(url))
+            {
+                return BadRequest("The requested Url cannot be empty");
+            }
+
+            var _link = await _linkService.GetLinkByShortUrlAsync(url);
+
+            if (_link.Success == false)
+            {
+                ModelState.AddModelError("", _link.Message);
+                return StatusCode(500, ModelState);
+            }
+
+            return Ok(_link);
+        }
 
         //Get Link Stats (LinkStats(DTO)
 
