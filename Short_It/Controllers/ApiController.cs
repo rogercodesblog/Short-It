@@ -38,6 +38,24 @@ namespace Short_It.Controllers
         }
 
         //Get Link Stats (LinkStats(DTO)
+        public async Task<ActionResult<LinkStatsDTO>> GetLinkStats(string url)
+        {
+            if(string.IsNullOrEmpty(url))
+            {
+                return BadRequest("The requested Url cannot be empty");
+            }
+
+            var _link = await _linkService.GetLinkStatsByShortUrlAsync(url);
+
+            if(_link.Success == false)
+            {
+                ModelState.AddModelError("", _link.Message);
+                return StatusCode(500, ModelState);
+            }
+
+            return Ok(_link);
+
+        }
 
         //Create Link (CreateLinkDTO)
 
