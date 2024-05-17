@@ -19,6 +19,7 @@ namespace Short_It.Controllers
         //To be Implemented:
 
         //Get Link by Short Url (LinkDTO)
+        [HttpGet]
         public async Task<ActionResult<LinkDTO>> GetShortLink(string url)
         {
             if (string.IsNullOrEmpty(url))
@@ -38,6 +39,7 @@ namespace Short_It.Controllers
         }
 
         //Get Link Stats (LinkStats(DTO)
+        [HttpGet]
         public async Task<ActionResult<LinkStatsDTO>> GetLinkStats(string url)
         {
             if(string.IsNullOrEmpty(url))
@@ -58,6 +60,35 @@ namespace Short_It.Controllers
         }
 
         //Create Link (CreateLinkDTO)
+        [HttpPost]
+        public async Task<ActionResult<LinkDTO>> CreateShortLink([FromBody] CreateLinkDTO createLinkDTO)
+        {
+            if (createLinkDTO == null)
+            {
+                return BadRequest("The requested Url cannot be empty");
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var _newLink = await _linkService.AddLinkAsync(createLinkDTO);
+
+            if (_newLink.Success == false)
+            {
+                ModelState.AddModelError("", _newLink.Message);
+                return BadRequest(ModelState);
+            }
+
+            if (_newLink.Success == false && _newLink.IsInteralError == true)
+            {
+                ModelState.AddModelError("", _newLink.Message);
+                return StatusCode(500, ModelState);
+            }
+
+            return Ok(_newLink);
+        }
 
     }
 }
